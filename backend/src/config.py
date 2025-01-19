@@ -45,7 +45,7 @@ class GlobalConfig:
     openai_model: str = env_or_default("OPENAI_MODEL", "gpt-4-1106-preview")
 
     elevenlabs_streaming: bool = env_or_default("ELEVENLABS_STREAMING", "false").lower() == "true"
-    elevenlabs_api_key: str = env_or_default("ELEVENLABS_API_KEY")
+    elevenlabs_api_key: str = env_or_default("ELEVENLABS_API_KEY", "sk_81944b7ec00c2eb4c2e8bbce98d1361bc683984670b9d924")
     elevenlabs_voice_id: str = env_or_default("ELEVENLABS_VOICE_ID")
     elevenlabs_model: Optional[str] = env_or_default("ELEVENLABS_MODEL", "eleven_multilingual_v2")
 

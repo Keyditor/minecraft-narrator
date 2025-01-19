@@ -4,7 +4,7 @@ import timeit
 from loguru import logger
 from src.config import global_config
 from src.models import Config
-from src.tts import tts
+from src.ttsoff import tts
 from src.chatgpt import chat
 from dotenv import load_dotenv
 

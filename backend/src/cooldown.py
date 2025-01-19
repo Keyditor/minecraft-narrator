@@ -12,8 +12,6 @@ class CooldownManager:
             Event.ADVANCEMENT,
             Event.DIMENSION_CHANGED,
             Event.PLAYER_CHAT,
-            Event.VOICE_COMPLETE,
-            Event.CUSTOM_PROMPT,
         ]
 
     def add_cooldown(self, name, duration: int):

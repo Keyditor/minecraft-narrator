@@ -1,7 +1,10 @@
-from enum import Enum, StrEnum
-from typing import List, TypedDict
+from enum import StrEnum
 
 from pydantic import BaseModel
+
+
+class BaseEventData(BaseModel):
+    pass
 
 
 class Event(StrEnum):
@@ -26,11 +29,6 @@ class Event(StrEnum):
     ANIMAL_BREED = "animal_breed"
     ITEM_TOSS = "item_toss"
     CONFIG = "config"
-    CUSTOM_PROMPT = "custom_prompt"
-    SET_SYSTEM = "set_system"
-    CUSTOM_TTS = "custom_tts"
-    VOICE_COMPLETE = "voice_complete"
-    VOICE_ACTIVATE = "voice_activate"
 
 
 class IncomingEvent(BaseModel):
@@ -54,22 +52,11 @@ class Config(BaseModel):
     tts: bool
 
 
-class SystemPrompt(TypedDict):
-    system_message: str
-    interactions: List[str]
-
-
-class Response(BaseModel):
-    mensagem: str
-    interacao: Enum
-
-# ==== Outgoing to Minecraft ====
+# ==== Outgoing ====
 class Action(StrEnum):
     IGNORE = "ignore"
     SEND_CHAT = "send_chat"
     NEW_PERSONALITY = "new_personality"
-    SPEECH_DATA = "speech_data"
-    INTERACTION = "interaction"
 
 
 class OutgoingAction(BaseModel):

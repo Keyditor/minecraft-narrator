@@ -1,9 +1,8 @@
-from enum import Enum
+from typing import Iterator
 import gradio as gr
 from loguru import logger
 from src.chatgpt import chat
 from src.context import context
-from src.models import Response
 from src.tts import tts
 from src.handler import event_handler
 
@@ -29,18 +28,21 @@ def customTTS_tab(loop):
                     def run_gpt(text: str) -> tuple[str, str]:
                         logger.info(f"Custom GPT prompt: {text}")
                         gpt = chat.ask(text, add_to_context=False)
-                        if gpt is None:
-                            return "No response", "No response"
+                        gpt = gpt()
 
-                        return gpt.mensagem, "Response generated"
+                        if isinstance(gpt, str):
+                            return gpt, "Response generated"
+                        if isinstance(gpt, Iterator):
+                            return "".join(list(gpt)), "Response generated"
+
+                        return "No response", "No response"
 
                     def run_tts(text: str, add_to_context: bool):
                         logger.info(f"Custom TTS to queue: {text}")
-                        Interactions = Enum("Interactions", {"none": "none"})
-                        r = Response.model_construct(mensagem=text, interacao=Interactions.none)
                         if add_to_context:
-                            context.put({"role": "assistant", "content": r.model_dump_json()})
-                        tts.synthesize(r, loop)
+                            context.put({"role": "assistant", "content": text})
+
+                        tts.synthesize(text, loop)
                         return "TTS audio added to queue"
 
                     gpt_input.render()
@@ -59,7 +61,7 @@ def customTTS_tab(loop):
                         value=False,
                     )
                     gr.Button(
-                        "Add tts to queue",
+                        "Add ttsoff to queue",
                         size="lg",
                         variant="primary",
                     ).click(

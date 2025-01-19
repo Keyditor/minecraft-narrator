@@ -1,3 +1,4 @@
 @echo off
-.\python\python.exe -m pip install poetry
-.\python\python.exe -m poetry install
+python -m pip install poetry
+python -m poetry install
+pause
